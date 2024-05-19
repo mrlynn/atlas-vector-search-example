@@ -1,10 +1,11 @@
 # MongoDB Vector Search with Sentence Transformers
 
-This repository contains a Python script that integrates MongoDB with Sentence Transformers for generating document embeddings and performing vector searches. The script offers functionalities to either generate new embeddings for a collection of descriptions in MongoDB or to query against these embeddings using vector search.
+This repository contains a Python script that integrates MongoDB with Sentence Transformers for generating document embeddings and performing vector searches. The script offers functionalities to load data, generate new embeddings for a collection of descriptions in MongoDB, or to query against these embeddings using vector search.
 
 ## Features
 
 - **Model Selection**: Allows users to choose from different transformer models for generating embeddings.
+- **Load Mode**: Loads predefined static inventory data into MongoDB.
 - **Generate Mode**: Generates embeddings for descriptions stored in a MongoDB collection and updates the collection with these embeddings.
 - **Query Mode**: Performs vector searches on the generated embeddings to find relevant documents based on a user query.
 - **Index Management**: Provides JSON configuration for creating a MongoDB vector search index tailored to the dimensions of the selected model.
@@ -26,15 +27,22 @@ pip install pymongo sentence-transformers python-dotenv
 Additionally, create a .env file in the root directory of this project with your MongoDB connection string:
 
 ```bash
-MONGO_URI=mongodb+srv://your_user:your_password@your_cluster/?retryWrites=true&w=majority&appName=VectorSearchApp
+MONGODB_URI=mongodb+srv://your_user:your_password@your_cluster/?retryWrites=true&w=majority&appName=VectorSearchApp
 ```
 
 ## Usage
 ### Setting Up
-Before you run the script in either mode, ensure your MongoDB connection string is set in the .env file as MONGO_URI.
+Before you run the script in any mode, ensure your MongoDB connection string is set in the .env file as `MONGODB_URI`.
+
+## Load Mode
+Loads static inventory data into the MongoDB 'inventory' collection. This is useful for initially populating the database with sample data.
+
+```bash
+python script.py load
+```
 
 ## Generate Mode
-This mode drops the existing MongoDB collection, creates a new one, generates embeddings for the stored descriptions, updates the collection, and prints the JSON necessary to create a vector search index:
+This mode generates embeddings for the stored descriptions, updates the collection, and prints the JSON necessary to create a vector search index:
 
 ```bash
 python script.py generate --model minilm
@@ -53,19 +61,22 @@ When prompted, enter your search query. The script will then output the most rel
 
 ## Running Examples
 
-* Generating Embeddings: Run python script.py generate --model distilbert. This will regenerate the database entries with new embeddings and suggest a JSON configuration for an index.
-* Querying: Run python script.py query --model distilbert. Enter a search term when prompted to see the top results.
+* Generating Embeddings: Run `python script.py generate --model distilbert`. This will regenerate the database entries with new embeddings and suggest a JSON configuration for an index.
+* Querying: Run `python script.py query --model distilbert`. Enter a search term when prompted to see the top results. This will perform a semantic search against the inventory database and return the top 3 suggestions along with a search score.  Note that different models will have different results.
 
 ## Supported Models
 Currently, the script supports the following models:
 
-* minilm: 'all-MiniLM-L6-v2' (384 dimensions)
-* distilbert: 'distilbert-base-nli-stsb-mean-tokens' (768 dimensions)
-* roberta: 'stsb-roberta-large' (1024 dimensions)
+* **minilm**: 'all-MiniLM-L6-v2' (384 dimensions)
+* **distilbert**: 'distilbert-base-nli-stsb-mean-tokens' (768 dimensions)
+* **roberta**: 'stsb-roberta-large' (1024 dimensions)
+* **msmarco**: 'msmarco-distilbert-base-v2' (768 dimensions)
 
 You can select the model using the --model flag followed by the model identifier when running the script.
 
 ## Contributions
 Contributions to this project are welcome! Please consider forking this repository and submitting a pull request.
 
+## License
+This project is licensed under the MIT License - see the LICENSE file for details.
 

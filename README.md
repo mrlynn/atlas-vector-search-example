@@ -31,8 +31,14 @@ MONGODB_URI=mongodb+srv://your_user:your_password@your_cluster/?retryWrites=true
 ```
 
 ## Usage
+
+The script is designed to demonstrate 3 basic modes of operation: 
+1. **Load** Load data into the database. This mode will load a very simple, very small basic hardware inventory database into your Atlas instance.
+2. **Generate** Generate vector embeddings using one of several transformer models. You can choose which model to use for the `generate` mode but remember to use the same model choice for `query` mode.
+3. **Query** Ask a question of the database. This question will be encoded using the model of your choice and sent to MongoDB using `$vectorSearch`.
+
 ### Setting Up
-Before you run the script in any mode, ensure your MongoDB connection string is set in the .env file as `MONGODB_URI`.
+Before you run the script in any mode, ensure your MongoDB connection string is set in the .env file as `MONGODB_URI`.  
 
 ## Load Mode
 Loads static inventory data into the MongoDB 'inventory' collection. This is useful for initially populating the database with sample data.

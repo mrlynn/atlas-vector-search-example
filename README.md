@@ -70,6 +70,16 @@ When prompted, enter your search query. The script will then output the most rel
 * Generating Embeddings: Run `python script.py generate --model distilbert`. This will regenerate the database entries with new embeddings and suggest a JSON configuration for an index.
 * Querying: Run `python script.py query --model distilbert`. Enter a search term when prompted to see the top results. This will perform a semantic search against the inventory database and return the top 3 suggestions along with a search score.  Note that different models will have different results.
 
+### Example Output
+
+```bash
+% python3 script.py query --model=roberta 
+Enter your search query: my hair is too curly
+{'description': 'Professional ceramic hair straightener', 'score': 0.6823198795318604}
+{'description': 'Heavy-duty extension cord, 50ft', 'score': 0.6547887921333313}
+{'description': 'Decorative outdoor string lights, 48 ft', 'score': 0.6264996528625488}
+```
+
 ## Supported Models
 Currently, the script supports the following models:
 

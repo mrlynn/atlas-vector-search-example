@@ -21,11 +21,13 @@ Before running the script, ensure you have the necessary Python packages install
 
 ```bash
 pip install pymongo sentence-transformers python-dotenv
+```
 
 Additionally, create a .env file in the root directory of this project with your MongoDB connection string:
 
 ```bash
 MONGO_URI=mongodb+srv://your_user:your_password@your_cluster/?retryWrites=true&w=majority&appName=VectorSearchApp
+```
 
 ## Usage
 ### Setting Up
@@ -36,6 +38,7 @@ This mode drops the existing MongoDB collection, creates a new one, generates em
 
 ```bash
 python script.py generate --model minilm
+```
 
 After running this command, you should manually create the vector search index in MongoDB Atlas using the provided JSON configuration.
 
@@ -44,6 +47,7 @@ To search the database using vector search, use the query mode. This mode prompt
 
 ```bash
 python script.py query --model minilm
+```
 
 When prompted, enter your search query. The script will then output the most relevant documents based on cosine similarity scores.
 
